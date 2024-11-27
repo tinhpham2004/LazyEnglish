@@ -2,6 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lazy_english/core/constants/app_color.dart';
+import 'package:lazy_english/core/constants/app_icon.dart';
 import 'package:lazy_english/core/constants/app_name.dart';
 import 'package:lazy_english/core/constants/app_text_theme.dart';
 import 'package:lazy_english/core/utils/spaces.dart';
@@ -164,7 +165,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   spaceH32,
                   AppOutlineButton(
                     title: 'Đăng nhập bằng Google',
-                    leadingIcon: Assets.icons.googleIcon.svg(),
+                    leadingIcon: AppIcon.google,
                     isMargin: false,
                   ),
                 ],
