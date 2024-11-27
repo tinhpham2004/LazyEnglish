@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:lazy_english/core/constants/app_color.dart';
 import 'package:lazy_english/core/constants/app_text_theme.dart';
 import 'package:lazy_english/core/utils/spaces.dart';
 import 'package:lazy_english/core/widgets/button/app_button.dart';
 import 'package:lazy_english/core/widgets/container/app_container.dart';
+import 'package:lazy_english/local/preferences.dart';
 import 'package:lazy_english/modules/first_test/models/english_level_model.dart';
 import 'package:lazy_english/my_app.dart';
+import 'package:lazy_english/router/app_path.dart';
 
 class FirstTestResultScren extends StatefulWidget {
   const FirstTestResultScren({super.key});
@@ -124,6 +127,10 @@ class _FirstTestResultScrenState extends State<FirstTestResultScren> {
             spaceH8,
             AppButton(
               title: 'Tiếp tục',
+              onTap: () async {
+                Preferences.setAuth();
+                GoRouter.of(context).push(AppPath.home);
+              },
             ),
           ],
         ),

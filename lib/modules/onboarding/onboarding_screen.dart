@@ -1,6 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:lazy_english/core/constants/app_color.dart';
 import 'package:lazy_english/core/constants/app_icon.dart';
 import 'package:lazy_english/core/constants/app_name.dart';
@@ -8,6 +9,7 @@ import 'package:lazy_english/core/constants/app_text_theme.dart';
 import 'package:lazy_english/core/utils/spaces.dart';
 import 'package:lazy_english/core/widgets/button/app_outline_button.dart';
 import 'package:lazy_english/gen/assets.gen.dart';
+import 'package:lazy_english/router/app_path.dart';
 
 class OnboardingScreen extends StatefulWidget {
   OnboardingScreen({Key? key}) : super(key: key);
@@ -167,6 +169,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     title: 'Đăng nhập bằng Google',
                     leadingIcon: AppIcon.google,
                     isMargin: false,
+                    onTap: () => GoRouter.of(context).push(AppPath.firstTest),
                   ),
                 ],
               ),

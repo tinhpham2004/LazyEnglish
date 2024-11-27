@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:lazy_english/core/constants/app_color.dart';
 import 'package:lazy_english/core/constants/app_icon.dart';
 import 'package:lazy_english/core/constants/app_text_theme.dart';
@@ -8,6 +9,7 @@ import 'package:lazy_english/core/widgets/button/app_button.dart';
 import 'package:lazy_english/core/widgets/container/app_container.dart';
 import 'package:lazy_english/core/widgets/progress_bar/app_progress_bar.dart';
 import 'package:lazy_english/modules/first_test/models/first_test_model.dart';
+import 'package:lazy_english/router/app_path.dart';
 
 class FirstTestScreen extends StatefulWidget {
   FirstTestScreen({Key? key}) : super(key: key);
@@ -70,9 +72,7 @@ class _FirstTestScreenState extends State<FirstTestScreen> {
       appBar: AppBar(
         leading: IconButton(
           icon: AppIcon.arrowLeft,
-          onPressed: () {
-            // Handle back action
-          },
+          onPressed: () => GoRouter.of(context).pop(),
         ),
         backgroundColor: Colors.white,
         elevation: 0,
@@ -144,6 +144,9 @@ class _FirstTestScreenState extends State<FirstTestScreen> {
                   });
                 } else {
                   isComplete = true;
+                  Future.delayed(Duration(seconds: 3), () {
+                    GoRouter.of(context).push(AppPath.firstTestResult);
+                  });
                 }
               }),
             ),
