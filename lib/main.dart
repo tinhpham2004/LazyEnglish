@@ -15,13 +15,13 @@ Future<void> main() async {
 
 Future<GoRouter> initializeRouter() async {
   GoRouter router = AppRouter().router;
-  String initialRoute = AppPath.onboarding;
+  String initialRoute = AppPath.myCard;
   dynamic extra;
 
-  final auth = await Preferences.getAuth();
-  if (auth == true) {
-    initialRoute = AppPath.home;
-  }
+  // final auth = await Preferences.getAuth();
+  // if (auth == true) {
+  //   initialRoute = AppPath.home;
+  // }
 
   router.go(initialRoute, extra: extra);
 

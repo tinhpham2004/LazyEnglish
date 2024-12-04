@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:lazy_english/core/constants/app_name.dart';
 
-
 class MyApp extends StatefulWidget {
   final GoRouter router;
 
@@ -25,12 +24,12 @@ class _MyAppState extends State<MyApp> {
           title: appName,
           debugShowCheckedModeBanner: false,
           theme: ThemeData(
-            // textSelectionTheme: const TextSelectionThemeData(
-            //   cursorColor: AppColor.primaryColor,
-            //   selectionColor: AppColor.primaryColor,
-            //   selectionHandleColor: AppColor.primaryColor,
-            // ),
-          ),
+              // textSelectionTheme: const TextSelectionThemeData(
+              //   cursorColor: AppColor.primaryColor,
+              //   selectionColor: AppColor.primaryColor,
+              //   selectionHandleColor: AppColor.primaryColor,
+              // ),
+              ),
           routerConfig: widget.router,
           builder: (context, widget) {
             ScreenUtil.init(context);

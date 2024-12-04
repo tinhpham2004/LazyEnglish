@@ -9,12 +9,16 @@ class AppOutlineButton extends StatelessWidget {
   final Widget? leadingIcon;
   final bool isMargin;
   final Function()? onTap;
+  final Color? titleColor;
+  final Color? borderColor;
   const AppOutlineButton({
     super.key,
     this.title,
     this.leadingIcon,
     this.isMargin = true,
     this.onTap,
+    this.titleColor,
+    this.borderColor,
   });
 
   @override
@@ -26,7 +30,7 @@ class AppOutlineButton extends StatelessWidget {
             isMargin ? EdgeInsets.symmetric(horizontal: 16.w) : EdgeInsets.zero,
         padding: EdgeInsets.symmetric(vertical: 8.h),
         decoration: BoxDecoration(
-          border: Border.all(color: AppColor.c_FFE2E8F0),
+          border: Border.all(color: borderColor ?? AppColor.c_FFE2E8F0),
           borderRadius: BorderRadius.circular(4.r),
         ),
         child: Row(
@@ -41,8 +45,10 @@ class AppOutlineButton extends StatelessWidget {
                 ],
                 Text(
                   title ?? '',
-                  style:
-                      textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.w500),
+                  style: textTheme.bodyLarge!.copyWith(
+                    fontWeight: FontWeight.w500,
+                    color: titleColor,
+                  ),
                 ),
               ],
             )),
