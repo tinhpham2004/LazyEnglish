@@ -63,9 +63,9 @@ class _BottomNavigationState extends State<BottomNavigation> {
           case 2:
             GoRouter.of(context).go(AppPath.myCard);
             break;
-          // case 3:
-          //   GoRouter.of(context).go(AppPath.account);
-          //   break;
+          case 3:
+            GoRouter.of(context).go(AppPath.account);
+            break;
           default:
             break;
         }

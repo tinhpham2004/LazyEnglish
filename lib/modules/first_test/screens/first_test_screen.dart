@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
@@ -19,22 +21,327 @@ class FirstTestScreen extends StatefulWidget {
 }
 
 class _FirstTestScreenState extends State<FirstTestScreen> {
-  List<FirstTestModel> answers = [];
+  final jsonString = '''
+{
+    "questions": [
+        {
+            "id": 1,
+            "question": "What are the synonyms of 'happy'?",
+            "choices": [
+                "Sad",
+                "Joyful",
+                "Angry",
+                "Content"
+            ],
+            "answer_keys": [
+                "Joyful",
+                "Content"
+            ],
+            "points": 10
+        },
+        {
+            "id": 2,
+            "question": "Which sentences are grammatically correct?",
+            "choices": [
+                "He go to school every day.",
+                "He goes to school every day.",
+                "He going to school every day.",
+                "He has gone to school every day."
+            ],
+            "answer_keys": [
+                "He goes to school every day.",
+                "He has gone to school every day."
+            ],
+            "points": 10
+        },
+        {
+            "id": 3,
+            "question": "Choose the correct past tense form:",
+            "choices": [
+                "He walk to the park yesterday.",
+                "He walked to the park yesterday.",
+                "He walking to the park yesterday.",
+                "He walks to the park yesterday."
+            ],
+            "answer_keys": [
+                "He walked to the park yesterday."
+            ],
+            "points": 5
+        },
+        {
+            "id": 4,
+            "question": "Identify the adjectives in the following sentence: 'The big brown dog barked loudly.'",
+            "choices": [
+                "big",
+                "brown",
+                "dog",
+                "loudly"
+            ],
+            "answer_keys": [
+                "big",
+                "brown"
+            ],
+            "points": 10
+        },
+        {
+            "id": 5,
+            "question": "What are the antonyms of 'difficult'?",
+            "choices": [
+                "Hard",
+                "Easy",
+                "Simple",
+                "Complicated"
+            ],
+            "answer_keys": [
+                "Easy",
+                "Simple"
+            ],
+            "points": 10
+        },
+        {
+            "id": 6,
+            "question": "Select the correctly spelled words:",
+            "choices": [
+                "Accomodation",
+                "Accommodation",
+                "Recieve",
+                "Receive"
+            ],
+            "answer_keys": [
+                "Accommodation",
+                "Receive"
+            ],
+            "points": 5
+        },
+        {
+            "id": 7,
+            "question": "Which sentences use correct punctuation?",
+            "choices": [
+                "Where are you going?",
+                "I am going to the park",
+                "Do you want to come.",
+                "Let's go together!"
+            ],
+            "answer_keys": [
+                "Where are you going?",
+                "Let's go together!"
+            ],
+            "points": 5
+        },
+        {
+            "id": 8,
+            "question": "Choose the correct word to complete the sentence: 'I need to ____ some milk from the store.'",
+            "choices": [
+                "buy",
+                "by",
+                "bye",
+                "bee"
+            ],
+            "answer_keys": [
+                "buy"
+            ],
+            "points": 5
+        },
+        {
+            "id": 9,
+            "question": "What are examples of proper nouns?",
+            "choices": [
+                "city",
+                "London",
+                "dog",
+                "Michael"
+            ],
+            "answer_keys": [
+                "London",
+                "Michael"
+            ],
+            "points": 10
+        },
+        {
+            "id": 10,
+            "question": "Identify the correct plural forms:",
+            "choices": [
+                "Childs",
+                "Children",
+                "Mouses",
+                "Mice"
+            ],
+            "answer_keys": [
+                "Children",
+                "Mice"
+            ],
+            "points": 10
+        },
+        {
+            "id": 11,
+            "question": "Which phrases are idioms?",
+            "choices": [
+                "Break the ice",
+                "Kick the bucket",
+                "Drink water",
+                "Take a seat"
+            ],
+            "answer_keys": [
+                "Break the ice",
+                "Kick the bucket"
+            ],
+            "points": 10
+        },
+        {
+            "id": 12,
+            "question": "Choose the correct comparative forms of 'good':",
+            "choices": [
+                "gooder",
+                "better",
+                "best",
+                "more good"
+            ],
+            "answer_keys": [
+                "better"
+            ],
+            "points": 5
+        },
+        {
+            "id": 13,
+            "question": "Which words are homophones?",
+            "choices": [
+                "Their",
+                "There",
+                "They're",
+                "Theirs"
+            ],
+            "answer_keys": [
+                "Their",
+                "There",
+                "They're"
+            ],
+            "points": 10
+        },
+        {
+            "id": 14,
+            "question": "Select the correct uses of articles:",
+            "choices": [
+                "I saw a apple.",
+                "I saw an apple.",
+                "She is a teacher.",
+                "She is teacher."
+            ],
+            "answer_keys": [
+                "I saw an apple.",
+                "She is a teacher."
+            ],
+            "points": 5
+        },
+        {
+            "id": 15,
+            "question": "What are examples of conjunctions?",
+            "choices": [
+                "and",
+                "but",
+                "run",
+                "because"
+            ],
+            "answer_keys": [
+                "and",
+                "but",
+                "because"
+            ],
+            "points": 10
+        },
+        {
+            "id": 16,
+            "question": "Identify the verbs in the sentence: 'She quickly writes a letter and sends it.'",
+            "choices": [
+                "quickly",
+                "writes",
+                "letter",
+                "sends"
+            ],
+            "answer_keys": [
+                "writes",
+                "sends"
+            ],
+            "points": 10
+        },
+        {
+            "id": 17,
+            "question": "Which sentences are in passive voice?",
+            "choices": [
+                "The cake was eaten by the children.",
+                "The children ate the cake.",
+                "The book is being read by her.",
+                "She is reading the book."
+            ],
+            "answer_keys": [
+                "The cake was eaten by the children.",
+                "The book is being read by her."
+            ],
+            "points": 10
+        },
+        {
+            "id": 18,
+            "question": "What are examples of interjections?",
+            "choices": [
+                "Oh!",
+                "Wow!",
+                "Run",
+                "Quietly"
+            ],
+            "answer_keys": [
+                "Oh!",
+                "Wow!"
+            ],
+            "points": 5
+        },
+        {
+            "id": 19,
+            "question": "Which words can complete the sentence: 'The weather today is very ____.'",
+            "choices": [
+                "cold",
+                "rains",
+                "beautiful",
+                "run"
+            ],
+            "answer_keys": [
+                "cold",
+                "beautiful"
+            ],
+            "points": 5
+        },
+        {
+            "id": 20,
+            "question": "Select the correct prepositions to complete the sentence: 'He is ____ the park.'",
+            "choices": [
+                "in",
+                "on",
+                "at",
+                "to"
+            ],
+            "answer_keys": [
+                "in",
+                "at"
+            ],
+            "points": 5
+        }
+    ]
+}
+''';
+
+  List<FirstTestModel> questions = [];
   int currentProgress = 1;
-  int totalProgress = 4;
+  int totalProgress = 0;
   bool isComplete = false;
+  int totalPoint = 0;
   int numberOfCorrectAnswer = 0;
   int totalOfCorrectAnswer = 0;
   @override
   void initState() {
-    answers = [
-      FirstTestModel(answer: 'Fast', isChecked: false, isCorrect: true),
-      FirstTestModel(answer: 'Slow', isChecked: false),
-      FirstTestModel(answer: 'Lazy', isChecked: false),
-      FirstTestModel(answer: 'Dull', isChecked: false),
-      FirstTestModel(answer: 'Rapid', isChecked: false, isCorrect: true),
-    ];
-
+    questions = (jsonDecode(jsonString)['questions'] as List<dynamic>)
+        .map<FirstTestModel>((e) => FirstTestModel.fromJson(e))
+        .toList();
+    totalProgress = questions.length;
+    totalOfCorrectAnswer = questions.fold(0,
+        (previousValue, element) => previousValue + element.answerKeys.length);
     super.initState();
   }
 
@@ -94,7 +401,7 @@ class _FirstTestScreenState extends State<FirstTestScreen> {
             ),
             spaceH8,
             Text(
-              'What is the synonym of "quick"?',
+              questions[currentProgress - 1].question ?? '',
               style: textTheme.bodyMedium!.copyWith(
                 color: AppColor.c_FF64748B,
                 fontWeight: FontWeight.w300,
@@ -104,9 +411,9 @@ class _FirstTestScreenState extends State<FirstTestScreen> {
             Expanded(
               child: ListView.separated(
                 separatorBuilder: (context, index) => spaceH16,
-                itemCount: answers.length,
+                itemCount: questions[currentProgress - 1].choices.length,
                 itemBuilder: (context, index) {
-                  final item = answers[index];
+                  final item = questions[currentProgress - 1].choices[index];
                   return AppContainer(
                     isSelected: item.isChecked,
                     child: CheckboxListTile(
@@ -120,32 +427,42 @@ class _FirstTestScreenState extends State<FirstTestScreen> {
                         });
                       },
                       title:
-                          Text(item.answer ?? '', style: textTheme.bodyLarge),
+                          Text(item.choice ?? '', style: textTheme.bodyLarge),
                       controlAffinity: ListTileControlAffinity.leading,
                     ),
                   );
                 },
               ),
             ),
-            const SizedBox(height: 16),
+            spaceH16,
             AppButton(
               title: 'Tiếp tục',
-              isEnable: answers.any((e) => e.isChecked),
+              isEnable: questions[currentProgress - 1]
+                  .choices
+                  .any((e) => e.isChecked),
               onTap: () => setState(() {
-                totalOfCorrectAnswer +=
-                    answers.where((element) => element.isCorrect).length;
-                numberOfCorrectAnswer += answers
-                    .where((element) => element.isChecked && element.isCorrect)
-                    .length;
+                // numberOfCorrectAnswer += answers
+                //     .where((element) => element.isChecked && element.isCorrect)
+                //     .length;
+                for (int i = 0;
+                    i < questions[currentProgress - 1].choices.length;
+                    i++) {
+                  if (questions[currentProgress - 1].choices[i].isChecked &&
+                      questions[currentProgress - 1].answerKeys.contains(
+                          questions[currentProgress - 1].choices[i].choice)) {
+                    numberOfCorrectAnswer++;
+                    totalPoint += (questions[currentProgress - 1].points ?? 0) ~/
+                        (questions[currentProgress - 1].answerKeys.isEmpty
+                            ? 1
+                            : questions[currentProgress - 1].answerKeys.length);
+                  }
+                }
                 if (currentProgress < totalProgress) {
                   currentProgress++;
-                  answers.forEach((element) {
-                    element.isChecked = false;
-                  });
                 } else {
                   isComplete = true;
                   Future.delayed(Duration(seconds: 3), () {
-                    GoRouter.of(context).push(AppPath.firstTestResult);
+                    GoRouter.of(context).push(AppPath.firstTestResult, extra: totalPoint);
                   });
                 }
               }),

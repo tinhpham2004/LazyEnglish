@@ -9,4 +9,6 @@ abstract class AppPath {
   static const flashcardTest = '/flashcard-test';
   static const notification = '/notification';
   static const myCard = '/my-card';
+  static const account = '/account';
+  static const setUpNotification = '/set-up-notification';
 }

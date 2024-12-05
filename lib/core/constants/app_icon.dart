@@ -37,4 +37,13 @@ class AppIcon {
   );
   static Widget lock = Assets.icons.lock.svg();
   static Widget arrowUpLeft = Assets.icons.arrowUpLeft.svg();
+  static Widget email = Assets.icons.email.svg();
+  static Widget bell = Assets.icons.bell.svg();
+  static Widget signOut = Assets.icons.signOut.svg();
+  static Widget arrowRightIos = Assets.icons.arrowRight.svg();
+  static Icon arrowDown = Icon(
+    Icons.keyboard_arrow_down,
+    color: AppColor.c_FF64748B,
+    size: size + 5.sp,
+  );
 }

@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:lazy_english/core/constants/app_color.dart';
 import 'package:lazy_english/core/constants/app_text_theme.dart';
+import 'package:lazy_english/core/utils/english_levels.dart';
 import 'package:lazy_english/core/utils/spaces.dart';
 import 'package:lazy_english/core/widgets/button/app_button.dart';
 import 'package:lazy_english/core/widgets/container/app_container.dart';
@@ -12,50 +13,30 @@ import 'package:lazy_english/my_app.dart';
 import 'package:lazy_english/router/app_path.dart';
 
 class FirstTestResultScren extends StatefulWidget {
-  const FirstTestResultScren({super.key});
+  final int point;
+  const FirstTestResultScren({super.key, required this.point});
 
   @override
   State<FirstTestResultScren> createState() => _FirstTestResultScrenState();
 }
 
 class _FirstTestResultScrenState extends State<FirstTestResultScren> {
-  List<EnglishLevelModel> levels = [
-    EnglishLevelModel(
-      title: 'A1 (Beginner)',
-      description:
-          'Sơ cấp: Người học có thể hiểu và sử dụng những cụm từ quen thuộc và các câu cơ bản để đáp ứng nhu cầu giao tiếp đơn giản.',
-    ),
-    EnglishLevelModel(
-      title: 'A2 (Elementary)',
-      description:
-          'Sơ trung cấp: Có thể giao tiếp trong các tình huống thường gặp, như giới thiệu bản thân, hỏi đường, hoặc mua sắm.',
-    ),
-    EnglishLevelModel(
-      title: 'B1 (Intermediate)',
-      description:
-          'Trung cấp: Có thể xử lý những tình huống giao tiếp phổ biến và hiểu nội dung chính của các đoạn văn bản đơn giản',
-    ),
-    EnglishLevelModel(
-      title: 'B2 (Upper-Intermediate)',
-      description:
-          'Trung cấp cao: Có thể hiểu và giao tiếp trôi chảy trong môi trường học thuật hoặc công việc, xử lý các tình huống giao tiếp phức tạp hơn.',
-    ),
-    EnglishLevelModel(
-      title: 'C1 (Advanced)',
-      description:
-          'Cao cấp: Hiểu và diễn đạt thành thạo các nội dung phức tạp trong giao tiếp và công việc chuyên môn.',
-    ),
-    EnglishLevelModel(
-      title: 'C2 (Proficiency)',
-      description:
-          'Thành thạo: Có khả năng sử dụng ngôn ngữ như người bản xứ, hiểu và diễn đạt tốt các ý tưởng trừu tượng và phức tạp.',
-    ),
-  ];
+  late EnglishLevelModel currentUserLevel;
+  List<EnglishLevelModel> englishLevelsData = [];
+
+  @override
+  void initState() {
+    englishLevelsData = List.from(englishLevels);
+    int index = englishLevelsData.indexWhere((element) =>
+        element.minPoints! <= widget.point &&
+        element.maxPoints! >= widget.point);
+    currentUserLevel = englishLevelsData[index];
+    englishLevelsData.removeAt(index);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    final currentUserLevel = levels[2];
-    levels.removeAt(2);
     return Scaffold(
       backgroundColor: AppColor.white,
       body: Padding(
@@ -101,7 +82,7 @@ class _FirstTestResultScrenState extends State<FirstTestResultScren> {
               child: ListView.separated(
                 shrinkWrap: true,
                 itemBuilder: (context, index) {
-                  final item = levels[index];
+                  final item = englishLevelsData[index];
                   return AppContainer(
                     isCheckContainer: true,
                     child: ListTile(
@@ -121,7 +102,7 @@ class _FirstTestResultScrenState extends State<FirstTestResultScren> {
                   );
                 },
                 separatorBuilder: (context, index) => spaceH8,
-                itemCount: levels.length,
+                itemCount: englishLevelsData.length,
               ),
             ),
             spaceH8,
@@ -129,6 +110,7 @@ class _FirstTestResultScrenState extends State<FirstTestResultScren> {
               title: 'Tiếp tục',
               onTap: () async {
                 Preferences.setAuth();
+                Preferences.setEnglishLevel(currentUserLevel.title ?? '');
                 GoRouter.of(context).push(AppPath.home);
               },
             ),

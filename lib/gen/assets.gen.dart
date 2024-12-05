@@ -18,9 +18,19 @@ class $AssetsIconsGen {
   /// File path: assets/icons/account.svg
   SvgGenImage get account => const SvgGenImage('assets/icons/account.svg');
 
+  /// File path: assets/icons/arrow_right.svg
+  SvgGenImage get arrowRight =>
+      const SvgGenImage('assets/icons/arrow_right.svg');
+
   /// File path: assets/icons/arrow_up_left.svg
   SvgGenImage get arrowUpLeft =>
       const SvgGenImage('assets/icons/arrow_up_left.svg');
+
+  /// File path: assets/icons/bell.svg
+  SvgGenImage get bell => const SvgGenImage('assets/icons/bell.svg');
+
+  /// File path: assets/icons/email.svg
+  SvgGenImage get email => const SvgGenImage('assets/icons/email.svg');
 
   /// File path: assets/icons/google_icon.svg
   SvgGenImage get googleIcon =>
@@ -54,13 +64,19 @@ class $AssetsIconsGen {
   SvgGenImage get selectedUser =>
       const SvgGenImage('assets/icons/selected_user.svg');
 
+  /// File path: assets/icons/sign_out.svg
+  SvgGenImage get signOut => const SvgGenImage('assets/icons/sign_out.svg');
+
   /// File path: assets/icons/system.svg
   SvgGenImage get system => const SvgGenImage('assets/icons/system.svg');
 
   /// List of all assets
   List<SvgGenImage> get values => [
         account,
+        arrowRight,
         arrowUpLeft,
+        bell,
+        email,
         googleIcon,
         lock,
         logo,
@@ -70,6 +86,7 @@ class $AssetsIconsGen {
         selectedNoti,
         selectedSystem,
         selectedUser,
+        signOut,
         system
       ];
 }

@@ -19,7 +19,7 @@ class AppButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: onTap,
+      onTap: isEnable ? onTap : null,
       child: Container(
         margin:
             isMargin ? EdgeInsets.symmetric(horizontal: 16.w) : EdgeInsets.zero,

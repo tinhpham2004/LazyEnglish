@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:lazy_english/modules/account/account_screen.dart';
 import 'package:lazy_english/modules/card_set/card_set_screen.dart';
 import 'package:lazy_english/modules/card_set_detail/card_set_detail_scren.dart';
 import 'package:lazy_english/modules/first_test/screens/first_test_result_scren.dart';
@@ -10,6 +11,7 @@ import 'package:lazy_english/modules/home/home_screen.dart';
 import 'package:lazy_english/modules/my_card/my_card_screen.dart';
 import 'package:lazy_english/modules/notification/notification_screen.dart';
 import 'package:lazy_english/modules/onboarding/onboarding_screen.dart';
+import 'package:lazy_english/modules/set_up_notification/set_up_notification_screen.dart';
 import 'package:lazy_english/router/app_path.dart';
 
 class AppRouter {
@@ -31,7 +33,10 @@ class AppRouter {
             ),
             GoRoute(
               path: AppPath.firstTestResult,
-              builder: (context, state) => FirstTestResultScren(),
+              builder: (context, state) {
+                final int point = state.extra as int;
+                return FirstTestResultScren(point: point);
+              },
             ),
             GoRoute(
               path: AppPath.home,
@@ -60,6 +65,14 @@ class AppRouter {
             GoRoute(
               path: AppPath.myCard,
               builder: (context, state) => MyCardScreen(),
+            ),
+            GoRoute(
+              path: AppPath.account,
+              builder: (context, state) => AccountScreen(),
+            ),
+            GoRoute(
+              path: AppPath.setUpNotification,
+              builder: (context, state) => SetUpNotificationScreen(),
             ),
           ],
         );
