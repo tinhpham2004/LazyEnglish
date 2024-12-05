@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:lazy_english/app_notification/app_notification.dart';
 import 'package:lazy_english/core/constants/app_color.dart';
 import 'package:lazy_english/core/constants/app_icon.dart';
 import 'package:lazy_english/core/constants/app_text_theme.dart';
+import 'package:lazy_english/core/utils/date_time.dart';
 import 'package:lazy_english/core/utils/spaces.dart';
 import 'package:lazy_english/core/widgets/appbar/appbar.dart';
+import 'package:lazy_english/core/widgets/button/app_button.dart';
+import 'package:lazy_english/modules/set_up_notification/api/reminder_request/reminder_request.dart';
+import 'package:lazy_english/modules/set_up_notification/api/reminder_service.dart';
 
 class SetUpNotificationScreen extends StatefulWidget {
   const SetUpNotificationScreen({super.key});
@@ -16,6 +22,7 @@ class SetUpNotificationScreen extends StatefulWidget {
 
 class _SetUpNotificationScreenState extends State<SetUpNotificationScreen> {
   // Variables to store selected values
+  bool isLoading = false;
   String? selectedDayStart;
   String? selectedMonthStart;
   String? selectedYearStart;
@@ -27,6 +34,17 @@ class _SetUpNotificationScreenState extends State<SetUpNotificationScreen> {
   String? selectedHour;
   String? selectedMinute;
   String? selectedAmPm;
+  bool get isSaveEnabled =>
+      selectedDayStart != null &&
+      selectedMonthStart != null &&
+      selectedYearStart != null &&
+      selectedDayEnd != null &&
+      selectedMonthEnd != null &&
+      selectedYearEnd != null &&
+      selectedHour != null &&
+      selectedMinute != null &&
+      selectedAmPm != null &&
+      !isLoading;
 
   // Dropdown options
   final List<String> days =
@@ -37,8 +55,7 @@ class _SetUpNotificationScreenState extends State<SetUpNotificationScreen> {
       List.generate(100, (index) => (2024 - index).toString());
   final List<String> hours =
       List.generate(12, (index) => (index + 1).toString());
-  final List<String> minutes =
-      List.generate(60, (index) => index.toString());
+  final List<String> minutes = List.generate(60, (index) => index.toString());
   final List<String> amPm = ['AM', 'PM'];
 
   @override
@@ -64,17 +81,17 @@ class _SetUpNotificationScreenState extends State<SetUpNotificationScreen> {
                 children: [
                   _buildDateRow("Ngày bắt đầu", (day, month, year) {
                     setState(() {
-                      selectedDayStart = day;
-                      selectedMonthStart = month;
-                      selectedYearStart = year;
+                      selectedDayStart = day ?? selectedDayStart;
+                      selectedMonthStart = month ?? selectedMonthStart;
+                      selectedYearStart = year ?? selectedYearStart;
                     });
                   }),
                   spaceH16,
                   _buildDateRow("Ngày kết thúc", (day, month, year) {
                     setState(() {
-                      selectedDayEnd = day;
-                      selectedMonthEnd = month;
-                      selectedYearEnd = year;
+                      selectedDayEnd = day ?? selectedDayEnd;
+                      selectedMonthEnd = month ?? selectedMonthEnd;
+                      selectedYearEnd = year ?? selectedYearEnd;
                     });
                   }),
                 ],
@@ -87,6 +104,55 @@ class _SetUpNotificationScreenState extends State<SetUpNotificationScreen> {
                   "Chọn tần suất nhận thông báo để phù hợp với lịch trình học tập của bạn.",
               child: _buildTimeRow(),
             ),
+            Spacer(),
+            AppButton(
+              title: "Lưu",
+              isMargin: false,
+              isEnable: isSaveEnabled,
+              onTap: () async {
+                setState(() {
+                  isLoading = true;
+                });
+                try {
+                  final notificationRepository = AppNotification(
+                      onNotificationResponse:
+                          (NotificationResponse response) {});
+                  final deviceToken =
+                      await notificationRepository.getDeviceToken();
+                  if (deviceToken != null) {
+                    final ReminderService reminderService = ReminderService();
+                    final request = ReminderRequest(
+                      userId: "1",
+                      deviceToken: deviceToken,
+                      startDate: DateTime(
+                        int.parse(selectedYearStart!),
+                        int.parse(selectedMonthStart!),
+                        int.parse(selectedDayStart!),
+                        int.parse(selectedHour!),
+                        int.parse(selectedMinute!),
+                      ).format(pattern: dd_mm_yyyy),
+                      endDate: DateTime(
+                        int.parse(selectedYearEnd!),
+                        int.parse(selectedMonthEnd!),
+                        int.parse(selectedDayEnd!),
+                        int.parse(selectedHour!),
+                        int.parse(selectedMinute!),
+                      ).format(pattern: dd_mm_yyyy),
+                      frequency:
+                          '${selectedHour}:${selectedMinute} $selectedAmPm',
+                    );
+                    final response = reminderService.setReminder(request);
+                  }
+                } catch (e) {
+                  print(e);
+                } finally {
+                  setState(() {
+                    isLoading = false;
+                  });
+                }
+              },
+            ),
+            spaceH16,
           ],
         ),
       ),

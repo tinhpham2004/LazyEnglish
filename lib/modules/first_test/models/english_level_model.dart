@@ -4,5 +4,6 @@ class EnglishLevelModel {
   int? minPoints;
   int? maxPoints;
 
-  EnglishLevelModel({this.title, this.description, this.minPoints, this.maxPoints});
+  EnglishLevelModel(
+      {this.title, this.description, this.minPoints, this.maxPoints});
 }

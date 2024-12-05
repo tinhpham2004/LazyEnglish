@@ -44,4 +44,3 @@ List<EnglishLevelModel> englishLevels = [
     maxPoints: 200,
   ),
 ];
-

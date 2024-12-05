@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "283864857862",
+    "project_id": "lazyenglish-60349",
+    "storage_bucket": "lazyenglish-60349.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:283864857862:android:20ad2fb7b9ed728147f287",
+        "android_client_info": {
+          "package_name": "com.example.lazy_english"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB56KNl7_gf9bDfgcWjrYfq9MLJuCpVYoE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

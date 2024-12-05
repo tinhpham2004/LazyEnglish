@@ -451,7 +451,8 @@ class _FirstTestScreenState extends State<FirstTestScreen> {
                       questions[currentProgress - 1].answerKeys.contains(
                           questions[currentProgress - 1].choices[i].choice)) {
                     numberOfCorrectAnswer++;
-                    totalPoint += (questions[currentProgress - 1].points ?? 0) ~/
+                    totalPoint += (questions[currentProgress - 1].points ??
+                            0) ~/
                         (questions[currentProgress - 1].answerKeys.isEmpty
                             ? 1
                             : questions[currentProgress - 1].answerKeys.length);
@@ -462,7 +463,8 @@ class _FirstTestScreenState extends State<FirstTestScreen> {
                 } else {
                   isComplete = true;
                   Future.delayed(Duration(seconds: 3), () {
-                    GoRouter.of(context).push(AppPath.firstTestResult, extra: totalPoint);
+                    GoRouter.of(context)
+                        .push(AppPath.firstTestResult, extra: totalPoint);
                   });
                 }
               }),
