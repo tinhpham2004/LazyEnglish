@@ -9,6 +9,7 @@ import 'package:lazy_english/core/utils/date_time.dart';
 import 'package:lazy_english/core/utils/spaces.dart';
 import 'package:lazy_english/core/widgets/appbar/appbar.dart';
 import 'package:lazy_english/core/widgets/button/app_button.dart';
+import 'package:lazy_english/core/widgets/snackbar/snackbar.dart';
 import 'package:lazy_english/modules/set_up_notification/api/reminder_request/reminder_request.dart';
 import 'package:lazy_english/modules/set_up_notification/api/reminder_service.dart';
 
@@ -139,11 +140,18 @@ class _SetUpNotificationScreenState extends State<SetUpNotificationScreen> {
                         int.parse(selectedMinute!),
                       ).format(pattern: dd_mm_yyyy),
                       frequency:
-                          '${selectedHour}:${selectedMinute} $selectedAmPm',
+                          '${selectedHour!.padLeft(2, '0')}:${selectedMinute!.padLeft(2, '0')} $selectedAmPm',
                     );
-                    final response = reminderService.setReminder(request);
+                    final response = await reminderService.setReminder(request);
+                    if (response) {
+                      showSuccessSnackbar(
+                          context, 'Thiết lập thông báo thành công!');
+                    } else {
+                      showErrorSnackbar(context, 'Đã có lỗi xảy ra!');
+                    }
                   }
                 } catch (e) {
+                  showErrorSnackbar(context, 'Đã có lỗi xảy ra!');
                   print(e);
                 } finally {
                   setState(() {

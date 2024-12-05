@@ -17,7 +17,7 @@ class ReminderService {
       body: jsonEncode(request.toJson()),
     );
 
-    if (response.statusCode != 201) {
+    if (response.statusCode != 200 && response.statusCode != 201) {
       return false;
     }
 
